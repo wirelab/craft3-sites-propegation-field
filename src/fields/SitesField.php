@@ -4,7 +4,7 @@
  * @copyright Copyright East Slope Studio, LLC
  */
 
-namespace eastslopestudio\sitesfield\fields;
+namespace wirelab\sitespropagationfield\fields;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -24,6 +24,11 @@ class SitesField extends Field implements PreviewableFieldInterface
 	 */
 	public $allowMultiple = false;
 
+    /**
+     * @var bool Whether or not the field will propagate the selection trough active sites
+     */
+	public $propagate = false;
+
 	/**
 	 * @var array What sites have been whitelisted as selectable for this field.
 	 */
@@ -35,7 +40,7 @@ class SitesField extends Field implements PreviewableFieldInterface
 	 */
 	public static function displayName(): string
 	{
-		return \Craft::t('sites-field', 'Sites');
+		return \Craft::t('sites-propagation-field', 'Sites');
 	}
 
 	/**
@@ -63,7 +68,7 @@ class SitesField extends Field implements PreviewableFieldInterface
 	public function getSettingsHtml(): string
 	{
 		return Craft::$app->getView()->renderTemplate(
-			'sites-field/_settings',
+			'sites-propagation-field/_settings',
 			[
 				'field' => $this,
 				'sites' => $this->getSites()
@@ -95,7 +100,7 @@ class SitesField extends Field implements PreviewableFieldInterface
 
 		foreach ($this->whitelistedSites as $site) {
 			if (!isset($sites[$site])) {
-				$this->addError($attribute, Craft::t('sites-field', 'Invalid site selected.'));
+				$this->addError($attribute, Craft::t('sites-propagation-field', 'Invalid site selected.'));
 			}
 		}
 	}
@@ -115,7 +120,7 @@ class SitesField extends Field implements PreviewableFieldInterface
 		$whitelist = array_intersect_key($sites, $whitelist); // Discard any sites not available within the whitelist.
 		
 		return Craft::$app->getView()->renderTemplate(
-			'sites-field/_input', [
+			'sites-propagation-field/_input', [
 				'field' => $this,
 				'value' => $value,
 				'sites' => $whitelist,
@@ -147,12 +152,12 @@ class SitesField extends Field implements PreviewableFieldInterface
         if (is_array($value)) {
             foreach ($value as $id) {
                 if (!isset($sites[$id])) {
-                    $element->addError($this->handle, Craft::t('sites-field', 'Invalid site selected.'));
+                    $element->addError($this->handle, Craft::t('sites-propagation-field', 'Invalid site selected.'));
                 }
             }
         } else {
             if (!isset($sites[$value])) {
-                $element->addError($this->handle, Craft::t('sites-field', 'Invalid site selected.'));
+                $element->addError($this->handle, Craft::t('sites-propagation-field', 'Invalid site selected.'));
             }
         }
 

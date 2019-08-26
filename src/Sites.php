@@ -4,15 +4,18 @@
  * @copyright Copyright East Slope Studio, LLC
  */
 
-namespace eastslopestudio\sitesfield;
+namespace wirelab\sitespropagationfield;
 
 use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
+use craft\elements\Entry;
+use craft\services\Elements;
 use craft\services\Fields;
 
-use eastslopestudio\sitesfield\fields\SitesField;
+use wirelab\sitespropagationfield\fields\SitesField;
 
+use wirelab\sitespropagationfield\listeners\EntrySavedListener;
 use yii\base\Event;
 
 /**
@@ -30,6 +33,12 @@ class Sites extends Plugin
 		parent::init();
 
 		Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, [$this, 'registerFieldTypes']);
+
+        Event::on(Entry::class, Entry::EVENT_BEFORE_SAVE, function (Event $event) {
+            new EntrySavedListener($event);
+        });
+
+
 	}
 
 	/**

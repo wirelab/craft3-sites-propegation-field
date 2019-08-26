@@ -16,3 +16,11 @@
 	name : 'allowMultiple',
 	checked: field.allowMultiple
 }) }}
+
+{{ forms.checkboxField({
+	label : 'Propagate trough sites' | t('sites-field'),
+	instructions : 'If checked, the plug-in will automatically set the enabled for the sites selected in the field. Important, this wil only work for one field attached to the entrytype, when multiple fields have this settings it will only use the first.' | t('sites-field'),
+	id : 'propegate',
+	name : 'propagate',
+	checked: field.propagate
+}) }}

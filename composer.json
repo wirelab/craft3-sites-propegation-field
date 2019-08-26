@@ -1,10 +1,15 @@
 {
-	"name": "eastslopestudio/craft3-sites-field",
+	"name": "wirelab/craft3-sites-propagation-field",
 	"description": "Craft 3 Field type that allows the selection of Craft sites.",
 	"type": "craft-plugin",
 	"version": "1.0.0",
 	"license": "MIT",
 	"authors": [
+		{
+			"name": "Wirelab",
+			"email": "len@wirelab.nl",
+			"homepage": "https://wirelab.nl"
+		},
 		{
 			"name": "East Slope Studio",
 			"email": "ryan@eastslope.studio",
@@ -26,15 +31,15 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"eastslopestudio\\sitesfield\\": "src/"
+			"wirelab\\sitespropagationfield\\": "src/"
 		}
 	},
 	"extra": {
-		"name": "Sites Field",
-		"handle": "sites-field",
+		"name": "Sites Propagation Field",
+		"handle": "sites-propagation-field",
 		"schemaVersion": "0.0.1",
 		"hasCpSettings": false,
 		"hasCpSection": false,
-		"class": "eastslopestudio\\sitesfield\\Sites"
+		"class": "wirelab\\sitespropagationfield\\Sites"
 	}
 }
