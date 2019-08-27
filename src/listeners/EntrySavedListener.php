@@ -17,7 +17,7 @@ class EntrySavedListener {
     /**
      * @var null
      */
-    private $sitesFieldsToPropagate = null;
+    private $sitesField = null;
 
     /**
      * EntrySavedListener constructor.
@@ -29,7 +29,10 @@ class EntrySavedListener {
         $this->event = $event;
         $this->setFields();
 
-        if($this->sitesFieldsToPropagate) {
+        if(
+            $this->sitesField
+            && is_array($this->event->sender->getFieldValue($this->sitesField))
+        ) {
             $this->propegate();
         }
     }
@@ -49,7 +52,7 @@ class EntrySavedListener {
                 get_class($field) === SitesField::class
                 && $field->propagate
             ) {
-                $this->sitesFieldsToPropagate = $field->handle;
+                $this->sitesField = $field->handle;
                 break;
             }
         }
@@ -62,7 +65,7 @@ class EntrySavedListener {
     {
         $this->event->sender->enabledForSite = in_array(
             $this->event->sender->siteId,
-            $this->event->sender->getFieldValue('sites')
+            $this->event->sender->getFieldValue($this->sitesField)
         );
     }
 
